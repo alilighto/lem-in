@@ -1,10 +1,9 @@
 package main
 
 import (
+	"/src/"
 	"fmt"
 	"os"
-	"structs"
-	"/src/"
 )
 
 func main() {
@@ -18,5 +17,18 @@ func main() {
 		fmt.Printf("ERROR: %s\n", err)
 		return
 	}
+	// Initialize graphs
+	mainGraph, _ := utils.SetGraphs(Colonie)
+
+	// Run BFS to find the shortest path
+	parents := algorithms.BFS(mainGraph)
+
+	// Reconstruct and display the shortest path
+	path := algorithms.GetPath(parents, mainGraph.End)
+	fmt.Println("Shortest path:", path)
+
+	// (Optional) Run Edmonds-Karp for maximum flow optimization
+	// maxFlow := algorithms.EdmondsKarp(mainGraph)
+	// fmt.Println("Maximum flow:", maxFlow)
 
 }
