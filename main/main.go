@@ -1,7 +1,8 @@
 package main
 
 import (
-	"/src/"
+	"Lemin/src"
+
 	"fmt"
 	"os"
 )
@@ -17,17 +18,17 @@ func main() {
 		fmt.Printf("ERROR: %s\n", err)
 		return
 	}
+	pathsWithDfs := Colonie.DFS([]string{}, Colonie.StartRoom, map[string]bool{}, [][]string{})
+	fmt.Println(pathsWithDfs)
 	// Initialize graphs
-	mainGraph, _ := utils.SetGraphs(Colonie)
-
 	// Run BFS to find the shortest path
-	parents := algorithms.BFS(mainGraph)
+	// parents := algorithms.BFS(mainGraph)
 
 	// Reconstruct and display the shortest path
-	path := algorithms.GetPath(parents, mainGraph.End)
-	fmt.Println("Shortest path:", path)
+	// path := algorithms.GetPath(parents, mainGraph.End)
+	// fmt.Println("Shortest path:", path)
 
-	// (Optional) Run Edmonds-Karp for maximum flow optimization
+	// maybe Run Edmonds-Karp for maximum flow optimization
 	// maxFlow := algorithms.EdmondsKarp(mainGraph)
 	// fmt.Println("Maximum flow:", maxFlow)
 
