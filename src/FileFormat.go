@@ -11,6 +11,7 @@ import (
 //  fill a struct with file content
 func HandleFormat(filename string) (*antcolonie, error) {
 	antcolonie := &antcolonie{}
+	antcolonie.Rooms = map[string][]string{}
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, fmt.Errorf(err.Error())
@@ -35,16 +36,16 @@ func HandleFormat(filename string) (*antcolonie, error) {
 		}
 		if Line == "##end" {
 			scanner.Scan()
-			antcolonie.StartRoom = strings.Fields(scanner.Text())[0]
+			antcolonie.EndRoom = strings.Fields(scanner.Text())[0]
 			continue
 		}
 		if Line == "" || strings.HasPrefix(Line, "#") {
 			continue
 		}
 		if strings.Contains(Line, "-") {
-			antcolonie.Edges = append(antcolonie.Edges, Line)
-		} else {
-			antcolonie.Rooms = append(antcolonie.Rooms, strings.Fields(Line)[0])
+			connection := strings.Split(Line,"-")
+			antcolonie.Rooms[connection[0]] = append(antcolonie.Rooms[connection[0]], connection[1])
+			antcolonie.Rooms[connection[1]] = append(antcolonie.Rooms[connection[1]], connection[0])
 		}
 	}
 	return antcolonie, nil
